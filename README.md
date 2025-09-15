@@ -20,7 +20,6 @@ jenkins-assignment/
 │   └── test.js       # Test suite
 ├── dist/             # Generated build artifacts (created after build)
 ├── package.json      # Node.js project configuration
-├── Jenkinsfile       # Pipeline definition for Jenkins
 └── README.md         # This file
 ```
 
@@ -57,6 +56,7 @@ Configure a webhook from this GitHub repository to trigger a Jenkins pipeline au
 
 2. **Create Jenkinsfile**
    - Create a Jenkinsfile in the repository root
+   - Use docker agent with docker-workflow plugin (any node docker image)
    - Define pipeline stages for checkout, install, test, build, and archive
    - Include HTML report publishing configuration
 
@@ -131,10 +131,6 @@ The pipeline should publish HTML reports for:
    - Verify reports appear in Jenkins sidebar after successful build
    - Test report accessibility and content
 
-5. **Verify Report Content**
-   - Check for build timestamps and system information
-   - Ensure proper HTML styling and responsive design
-
 ### Expected Results
 - ✅ Pipeline builds the Node.js project successfully
 - ✅ Static HTML files are generated in `dist/` directory
@@ -144,10 +140,6 @@ The pipeline should publish HTML reports for:
 
 ### Advanced Features (Optional)
 - **Email notifications** on build success/failure
-- **Slack integration** for team notifications  
-- **Multiple branch support** with different deployment targets
-- **Performance metrics** tracking across builds
-- **Custom report styling** and branding
 
 ### Troubleshooting
 - If HTML reports don't appear, verify HTML Publisher plugin is installed
@@ -180,10 +172,3 @@ After completing both assignments, you will have learned:
    - NPM script configuration
    - Static asset generation
    - Test automation
-
-## Next Steps
-
-- Explore more advanced Jenkins features (parallel stages, matrix builds)
-- Implement deployment stages for different environments
-- Add code quality checks (linting, coverage)
-- Integrate with monitoring and logging systems
