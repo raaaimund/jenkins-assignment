@@ -50,44 +50,29 @@ Configure a webhook from this GitHub repository to trigger a Jenkins pipeline au
 
 ### Steps to Complete
 
-#### 1. Jenkins Setup
-1. **Install Jenkins** on your server or use a cloud-based Jenkins instance
-2. **Install required plugins**:
-   - GitHub Integration Plugin
-   - Pipeline Plugin
-   - HTML Publisher Plugin
-   - Git Plugin
+1. **Create Jenkins Pipeline Job**
+   - Create new Pipeline job in Jenkins
+   - Configure Pipeline script from SCM
+   - Set repository URL and branch
 
-#### 2. Create Jenkins Pipeline Job
-1. Create a new "Pipeline" job in Jenkins
-2. Configure the job:
-   - **Name**: `jenkins-assignment-pipeline`
-   - **Type**: Pipeline
-   - **Pipeline Definition**: Pipeline script from SCM
-   - **SCM**: Git
-   - **Repository URL**: `https://github.com/raaaimund/jenkins-assignment.git`
-   - **Branch**: `*/main` (or your default branch)
-   - **Script Path**: `Jenkinsfile`
+2. **Create Jenkinsfile**
+   - Create a Jenkinsfile in the repository root
+   - Define pipeline stages for checkout, install, test, build, and archive
+   - Include HTML report publishing configuration
 
-#### 3. Configure GitHub Webhook
-1. **In GitHub Repository Settings**:
-   - Go to Settings → Webhooks
-   - Click "Add webhook"
-   - **Payload URL**: `http://YOUR_JENKINS_URL/github-webhook/`
-   - **Content type**: `application/json`
-   - **Which events**: Select "Just the push event"
-   - **Active**: ✅ Checked
+3. **Configure GitHub Webhook** 
+   - Add webhook in GitHub repository settings
+   - Set payload URL to Jenkins webhook endpoint
+   - Configure for push events
 
-2. **Configure Jenkins GitHub Integration**:
-   - In Jenkins job configuration
-   - Under "Build Triggers"
-   - Check "GitHub hook trigger for GITScm polling"
+4. **Configure Jenkins GitHub Integration**
+   - Enable GitHub hook trigger in Jenkins job
+   - Set up polling configuration
 
-#### 4. Test the Webhook
-1. Make a small change to this README file
-2. Commit and push to the repository
-3. Verify that Jenkins automatically triggers a build
-4. Check the Jenkins console output for successful execution
+5. **Test the Webhook**
+   - Make a change and push to repository
+   - Verify Jenkins automatically triggers build
+   - Check console output for successful execution
 
 ### Expected Results
 - ✅ Push to GitHub automatically triggers Jenkins build
@@ -108,64 +93,47 @@ Configure a webhook from this GitHub repository to trigger a Jenkins pipeline au
 ### Objective
 Configure the Jenkins pipeline to build the Node.js project and publish the generated HTML files as reports that can be viewed directly in Jenkins.
 
-### Pipeline Features Implemented
+### Required Pipeline Features
 
-The `Jenkinsfile` in this repository includes:
+Your Jenkinsfile should include:
 
 #### 1. **Multi-Stage Pipeline**
-- **Checkout**: Verifies source code and environment
-- **Install Dependencies**: Runs `npm install` 
-- **Run Tests**: Executes the test suite with `npm test`
-- **Build Application**: Creates static HTML files with `npm run build`
-- **Archive Artifacts**: Saves build outputs and publishes HTML reports
+- **Checkout**: Verify source code and environment
+- **Install Dependencies**: Run `npm install` 
+- **Run Tests**: Execute test suite with `npm test`
+- **Build Application**: Create static HTML files with `npm run build`
+- **Archive Artifacts**: Save build outputs and publish HTML reports
 
 #### 2. **HTML Report Publishing**
-The pipeline publishes two types of HTML reports:
-
-**Application Report** (`index.html`):
-- Main application output
-- Demonstrates the generated HTML content
-- Shows build timestamp and success status
-
-**Build Report** (`build-report.html`):
-- Detailed build statistics
-- Build duration and system information
-- Success/failure status
+The pipeline should publish HTML reports for:
+- **Application Report** (`index.html`): Main application output
+- **Build Report** (`build-report.html`): Build statistics and system information
 
 #### 3. **Artifact Management**
-- All files in `dist/` directory are archived
-- Build manifest JSON file with metadata
-- Reports are accessible through Jenkins UI
+- Archive all files in `dist/` directory
+- Make reports accessible through Jenkins UI
 
 ### Steps to Complete
 
-#### 1. Verify Pipeline Configuration
-1. Ensure the `Jenkinsfile` is in the repository root
-2. Review the pipeline stages and understand each step
-3. Confirm HTML Publisher plugin is installed in Jenkins
+1. **Configure Pipeline Stages**
+   - Create multi-stage pipeline with checkout, install, test, build, archive
+   - Use appropriate npm commands for each stage
 
-#### 2. Run the Pipeline
-1. Trigger a build (manually or via webhook from Assignment 1)
-2. Monitor the pipeline execution through Jenkins Blue Ocean or classic UI
-3. Verify all stages complete successfully
+2. **Implement HTML Publishing**
+   - Use `publishHTML` directive to publish reports
+   - Configure separate reports for application and build outputs
 
-#### 3. Access HTML Reports
-1. **After successful build**:
-   - Go to the build page in Jenkins
-   - Look for "Application Report" and "Build Report" links in the sidebar
-   - Click on the reports to view the generated HTML
+3. **Run the Pipeline**
+   - Trigger build manually or via webhook
+   - Monitor pipeline execution in Jenkins UI
 
-2. **Alternative access**:
-   - Navigate to job → build number → "Build Artifacts"
-   - Download or view HTML files directly
+4. **Access HTML Reports**
+   - Verify reports appear in Jenkins sidebar after successful build
+   - Test report accessibility and content
 
-#### 4. Verify Report Content
-The HTML reports should contain:
-- ✅ Build timestamp and duration
-- ✅ System information (Node.js version, platform)
-- ✅ Success status indicators
-- ✅ Styled HTML with CSS
-- ✅ Responsive design
+5. **Verify Report Content**
+   - Check for build timestamps and system information
+   - Ensure proper HTML styling and responsive design
 
 ### Expected Results
 - ✅ Pipeline builds the Node.js project successfully
